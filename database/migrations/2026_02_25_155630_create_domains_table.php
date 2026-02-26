@@ -11,32 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('armies', function (Blueprint $table) {
+        Schema::create('domains', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
 
-            $table->string('name');
-
-            // Casa o señor principal al que pertenece
-            $table->foreignId('house_id')
+            // Casa asociada por defecto / icónica de este dominio / ciudad (opcional)
+            $table->foreignId('default_house_id')
                 ->nullable()
                 ->constrained('houses')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            // Comandante principal conocido (si lo hay)
-            $table->foreignId('commander_id')
+            $table->foreignId('region_id')
                 ->nullable()
-                ->constrained('characters')
+                ->constrained('regions')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            $table->integer('estimated_size')->nullable(); // número aproximado de tropas
+            $table->string('svg_path')->nullable();
 
             $table->text('description')->nullable();
-
             $table->timestamps();
-
-            $table->index('house_id');
         });
     }
 
@@ -45,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('armies');
+        Schema::dropIfExists('domains');
     }
 };

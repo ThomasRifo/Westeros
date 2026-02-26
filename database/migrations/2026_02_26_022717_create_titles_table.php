@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timeline_events', function (Blueprint $table) {
+        Schema::create('titles', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique(); // Rey en el Norte, Mano del Rey, etc.
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timeline_events');
+        Schema::dropIfExists('titles');
     }
 };
+

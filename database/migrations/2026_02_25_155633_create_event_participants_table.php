@@ -13,7 +13,39 @@ return new class extends Migration
     {
         Schema::create('event_participants', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('timeline_event_id')
+                ->constrained('timeline_events')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            // Estado dentro del evento (vivo, muerto, herido, desaparecido, etc.)
+            $table->foreignId('status_id')
+                ->nullable()
+                ->constrained('statuses')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
+
+            // Participante polimórfico: personaje, ejército, dragón, asset, etc.
+            $table->string('entity_type');
+            $table->unsignedBigInteger('entity_id');
+
+            // Localización específica en el mapa para este evento (opcional)
+            $table->foreignId('map_location_id')
+                ->nullable()
+                ->constrained('map_locations')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
+
+            // Rol en el evento (atacante, defensor, observador, mensajero, etc.)
+            $table->string('role')->nullable();
+
+            // Notas cortas de contexto específicas del participante
+            $table->text('context_note')->nullable();
+
             $table->timestamps();
+
+            $table->index(['entity_type', 'entity_id']);
         });
     }
 

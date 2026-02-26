@@ -11,28 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('armies', function (Blueprint $table) {
+        Schema::create('characters', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-
-            // Casa o señor principal al que pertenece
             $table->foreignId('house_id')
                 ->nullable()
                 ->constrained('houses')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            // Comandante principal conocido (si lo hay)
-            $table->foreignId('commander_id')
-                ->nullable()
-                ->constrained('characters')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
+            $table->string('name');           // Nombre completo
+            $table->string('nickname')->nullable();
 
-            $table->integer('estimated_size')->nullable(); // número aproximado de tropas
+            $table->integer('birth_year')->nullable();
+            $table->integer('death_year')->nullable();
 
-            $table->text('description')->nullable();
+            $table->string('gender')->nullable();
+
+            $table->text('basic_data')->nullable(); // resumen biográfico base
 
             $table->timestamps();
 
@@ -45,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('armies');
+        Schema::dropIfExists('characters');
     }
 };

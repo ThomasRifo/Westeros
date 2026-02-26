@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dragons', function (Blueprint $table) {
+        Schema::create('assets', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name')->unique();
-            $table->string('principal_color')->nullable();
-            $table->string('secondary_color')->nullable();
-
-            $table->integer('birth_year')->nullable();
-            $table->integer('death_year')->nullable();
-
+            // Nombre legible del asset (puede repetirse entre categorías)
+            $table->string('name');
+            $table->string('slug')->unique();
+            // Categoría de asset: unit_type, unique_item, emblem, weapon, siege, naval, etc.
+            $table->string('type')->nullable();
             $table->text('description')->nullable();
-
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dragons');
+        Schema::dropIfExists('assets');
     }
 };

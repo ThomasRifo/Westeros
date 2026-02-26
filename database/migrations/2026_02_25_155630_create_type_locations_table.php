@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('map_locations', function (Blueprint $table) {
+        Schema::create('type_locations', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique(); // castillo, ciudad, región, frente, mar, etc.
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('map_locations');
+        Schema::dropIfExists('type_locations');
     }
 };
+

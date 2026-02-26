@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dragons', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-
             $table->string('name')->unique();
-            $table->string('principal_color')->nullable();
-            $table->string('secondary_color')->nullable();
+            $table->string('slug')->unique();
 
-            $table->integer('birth_year')->nullable();
-            $table->integer('death_year')->nullable();
-
+            // Casa asociada por defecto / icónica de esta macro-región (opcional)
+            $table->string('default_house_id')->nullable();
+            $table->string('svg_path')->nullable();
             $table->text('description')->nullable();
-
             $table->timestamps();
         });
     }
@@ -32,6 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dragons');
+        Schema::dropIfExists('regions');
     }
 };
+

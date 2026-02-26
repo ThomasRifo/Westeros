@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('eras', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('start_year')->nullable(); // Año de inicio aproximado
+            $table->integer('end_year')->nullable();   // Año de fin (puede ser null si sigue abierta)
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('eras');
     }
 };

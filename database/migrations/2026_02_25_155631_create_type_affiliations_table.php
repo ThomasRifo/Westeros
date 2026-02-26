@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eras', function (Blueprint $table) {
+        Schema::create('type_affiliations', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique(); // señor, vasallo, aliado, neutral, etc.
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('eras');
+        Schema::dropIfExists('type_affiliations');
     }
 };

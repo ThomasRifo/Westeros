@@ -11,18 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dragons', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name')->unique();
-            $table->string('principal_color')->nullable();
-            $table->string('secondary_color')->nullable();
-
-            $table->integer('birth_year')->nullable();
-            $table->integer('death_year')->nullable();
-
+            $table->string('name')->unique(); // vivo, muerto, herido, desaparecido, destruido, etc.
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-
             $table->timestamps();
         });
     }
@@ -32,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dragons');
+        Schema::dropIfExists('statuses');
     }
 };
+
